@@ -51,7 +51,7 @@ public:
         vector<Space> column = getXColumn(x);
         Space row = column[y];
         row.value = newValue;
-        cout << "New Value: " << " x: " << "y: " << y << " val: " << row.value;
+        cout << "New Value: " << " x: " << x << "y: " << y << " val: " << row.value << endl;
         return row.value;
     }
 
