@@ -58,7 +58,7 @@ public:
         bool bottom;
         bool left;
         bool right;
-        cout << "---- Current Game State ----" << endl << endl;
+        cout << "---- Tic Tac Toe ----" << endl << endl;
 
         const int x_size = board_matrix.size();
         bool possible_win_ycol = false;
