@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <string>
 #include <iostream>
@@ -18,11 +19,14 @@ public:
         value = val;
     };
 
+    bool spaceAvailable() {
+        return value == "*";
+    }
+
 };
 
 class GameBoard {
-    vector<vector<Space> > board_matrix;
-
+    vector < vector<Space> > board_matrix;
 
     void initializeSpacesInBoard() {
         for (int x = 0; x < boardSize; x++) {
@@ -35,33 +39,29 @@ class GameBoard {
         }
     }
 
-    vector<Space> getXColumn(const int x) {
-        // if (x > (board_matrix.size() - 1)) {
-        //     throw std::out_of_range
-        // } 
-        return board_matrix[x];
-    }
-
 public:
     GameBoard() {
         initializeSpacesInBoard();
     }
 
     string setValue(const int x, const int y, string newValue) {
-        vector<Space> column = getXColumn(x);
-        Space row = column[y];
-        row.value = newValue;
-        cout << "New Value: " << " x: " << x << "y: " << y << " val: " << row.value << endl;
-        return row.value;
+        board_matrix[x][y].setValue(newValue);
+        return board_matrix[x][y].value;
     }
 
-    void displayGameState() {
-        const int x_size = board_matrix.size();
+    bool spaceAvailable(const int x, const int y) {
+         return board_matrix[x][y].spaceAvailable();
+    }
+
+    bool displayGameState() {
         bool top;
         bool bottom;
         bool left;
         bool right;
-        cout << "TTTT Current Game State TTTT" << endl << endl;
+        cout << "---- Current Game State ----" << endl << endl;
+
+        const int x_size = board_matrix.size();
+        bool possible_win_ycol = false;
 
         for (int x = 0; x < x_size; x++) {
 
@@ -69,22 +69,26 @@ public:
             top = x == 0;
             bottom = x == (x_size - 1);
 
-            if (top) {
-                // for (int i = 0; i < x_size; i++) {
-                // }
-            }
             const int y_size = column.size();
+            string lastValue_ycol;
             for (int y = 0; y < y_size; y++) {
-                // cout << "x:" << x;
-                // cout << "y:" << y;
+                // cout << "x:" << x << endl;
+                // cout << "y:" << y << endl;
+                
+                string value;
+                value = column[y].value;
+                if (y == 0 && value != "*") {
+                    lastValue_ycol = value;
+                } else {
+                    if (lastValue_ycol == value) {
+                        possible_win_ycol = true;
+                    } else {
+                        possible_win_ycol = false;
+                    }
+                }
+                // cout << "value: " << column[y].value << endl;
                 left = y == 0;
                 right= y == (y_size - 1);
-                string value;
-                // if (!column[y]) {
-                    value = column[y].value;
-                // } else {
-                    // value = "*";
-                // }
 
                 if (left) { 
                     cout << "|" << value;
@@ -97,12 +101,15 @@ public:
                 }
             }
             cout << endl;   
-            // if (bottom) {
-            //     for (int i = 0; i < x_size; i++) {
-            //         cout << "_______________";
-            //     }
-            // }
+
         }
+        if (possible_win_ycol) {
+                cout << "Win on y column!";
+                return true;
+        } else {
+            return false;
+        }
+        
         cout << " _________" << endl << endl;
 
     }
