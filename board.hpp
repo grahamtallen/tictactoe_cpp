@@ -14,9 +14,9 @@ public:
         value = "*";
     }
 
-    // void setValue(string val) {
-    //     value = val;
-    // };
+    void setValue(string val) {
+        value = val;
+    };
 
 };
 
@@ -48,8 +48,8 @@ public:
     }
 
     string setValue(const int x, const int y, string newValue) {
-        vector<Space&> column = getXColumn(x);
-        Space& row = column[y];
+        vector<Space> column = getXColumn(x);
+        Space row = column[y];
         row.value = newValue;
         cout << "New Value: " << " x: " << "y: " << y << " val: " << row.value;
         return row.value;
