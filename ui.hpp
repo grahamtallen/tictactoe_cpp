@@ -21,6 +21,8 @@ void playerTurn(GameBoard game_board, const string player1Letter, const string p
 
     cout << "Y coordinate:";
     cin >> y_coordinate;
+
+    cout << "X: " << x_coordinate << " Y: " << y_coordinate << endl;
     bool spaceIsAvailable = game_board.spaceAvailable(x_coordinate, y_coordinate);
     if (!spaceIsAvailable) {
         cout << "That space is already taken, try again." << endl << endl;
